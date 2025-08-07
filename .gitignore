@@ -1,0 +1,46 @@
+# Arquivos de log e cache
+###################################
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# Pasta de dependências (ESSENCIAL)
+###################################
+node_modules/
+
+# Build do Next.js (ESSENCIAL)
+###################################
+.next/
+out/
+
+# Arquivos de ambiente e segredos (MUITO IMPORTANTE PARA SEGURANÇA)
+###################################
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Arquivos de cache do TypeScript
+###################################
+*.tsbuildinfo
+
+# Testes e cobertura de código
+###################################
+coverage/
+
+# Configurações de Editores e IDEs
+###################################
+.vscode/
+.idea/
+.project
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos de sistema operacional
+###################################
+.DS_Store
+Thumbs.db

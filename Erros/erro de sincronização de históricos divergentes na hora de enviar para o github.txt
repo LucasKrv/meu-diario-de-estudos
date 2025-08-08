@@ -1,0 +1,63 @@
+#erro de sincronização de históricos divergentes na hora de enviar para o github
+
+### **O Que Significa o Erro?**
+
+A mensagem `(non-fast-forward)` significa o seguinte, em termos simples:
+
+> **O seu repositório no GitHub tem alterações (commits) que o seu repositório local (no seu PC) ainda não tem.**
+
+Git está te protegendo para que você não apague acidentalmente esse trabalho que está no GitHub. Ele te força a primeiro integrar as mudanças remotas com as suas locais antes de enviar as suas próprias.
+
+### **Por Que Isso Aconteceu?**
+
+A causa mais provável é que, quando você criou o repositório no GitHub, você marcou a opção **"Add a README file"**, ".gitignore" ou uma licença.
+
+Isso fez com que o GitHub criasse um *commit inicial* diretamente lá no servidor. Enquanto isso, você criou seus próprios commits no seu computador. Agora, existem duas "histórias" diferentes que precisam ser unificadas.
+
+```mermaid
+graph LR
+    subgraph Repositório no GitHub (Remoto)
+        A(Commit Inicial com README)
+    end
+
+    subgraph Seu Computador (Local)
+        B(Seu primeiro commit)
+    end
+```
+
+Você está tentando empurrar `B` para um lugar que já tem `A`. Git não sabe como fazer isso automaticamente sem sua permissão.
+
+### **A Solução (O Jeito Correto e Limpo)**
+
+Como o próprio Git sugere, você precisa primeiro "puxar" (`pull`) as alterações do GitHub e integrá-las. A melhor maneira de fazer isso para manter um histórico limpo é usando a opção `--rebase`.
+
+**Siga estes dois passos no seu terminal:**
+
+#### **Passo 1: Puxe as alterações com `rebase`**
+
+Este comando vai buscar as alterações do GitHub, colocar os seus commits "de lado" temporariamente, aplicar as alterações do GitHub e, em seguida, reaplicar os seus commits por cima. O resultado é um histórico linear e limpo.
+
+```bash
+git pull origin main --rebase
+```
+
+Se um editor de texto abrir (como o Vim), pedindo uma mensagem de commit, pode ser que haja um conflito, mas é improvável neste caso. Se abrir, apenas digite `:q` e pressione Enter.
+
+#### **Passo 2: Agora, envie suas alterações (`push`)**
+
+Depois de integrar as alterações, seu repositório local está "à frente" do remoto. Agora o `push` vai funcionar.
+
+```bash
+git push -u origin main
+```
+
+E pronto\! Suas alterações serão enviadas com sucesso.
+
+-----
+
+### **Resumo Rápido (Os Comandos para Resolver)**
+
+1.  `git pull origin main --rebase`
+2.  `git push -u origin main`
+
+Entender este erro é um grande passo para se tornar proficiente em Git. Você acabou de aprender a sincronizar históricos divergentes, uma tarefa essencial no dia a dia do desenvolvimento\!
